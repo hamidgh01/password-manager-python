@@ -1,0 +1,5 @@
+*.txt
+venv/
+.idea/
+other versions/
+ready.py
