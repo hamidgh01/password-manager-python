@@ -1,9 +1,10 @@
-"""gen"""
+"""organizer and manager of the app (password-manager)"""
 
 import secrets
 import string
 from configparser import ConfigParser
 from cryptography.fernet import Fernet
+from DB_handler import DBHandler
 
 
 def get_encryption_key():
@@ -29,3 +30,48 @@ def get_encryption_key():
         with open("confs.ini", "w") as conf_file:
             config_parser.write(conf_file)
         return encryption_key
+
+
+class App:
+    """main engine"""
+    
+    def __init__(self):
+        self.database = DBHandler("database.db")
+    
+    def login_required(self, method):
+        """login required decorator"""
+        pass
+    
+    def register_user(self):
+        """register user"""
+        pass
+    
+    @login_required
+    def login(self):
+        """login"""
+        pass
+    
+    @login_required
+    def change_password(self):
+        """change password"""
+        pass
+    
+    @login_required
+    def add_entity(self):
+        """add new entity"""
+        pass
+    
+    @login_required
+    def show_entities(self):
+        """show entities"""
+        pass
+    
+    @login_required
+    def update_entity(self):
+        """update entity"""
+        pass
+    
+    @login_required
+    def delete_entity(self):
+        """delete entity"""
+        pass
