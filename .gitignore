@@ -2,4 +2,4 @@
 venv/
 .idea/
 other versions/
-ready.py
+__pycache__/
