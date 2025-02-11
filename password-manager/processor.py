@@ -68,8 +68,20 @@ class App:
             """enter 'q' to exit this process"""
             return True if input_.lower() == "q" else False
         
+        self.database.db_cursor.execute("SELECT username FROM users;")
+        usernames_list = [
+            record[0] for record in self.database.db_cursor.fetchall()
+        ]
+        
         print("(enter 'q' to exit this process)")
         username = input("username: ")
+        while username in usernames_list:
+            sleep(0.5)
+            print(f"\nthe username {username!r} is already taken! "
+                  f"please enter a different username.\n")
+            sleep(0.5)
+            print("(enter 'q' to exit this process)")
+            username = input("username: ")
         if exit_if_q(username):
             return None
         if not is_valid(username, for_="username"):
