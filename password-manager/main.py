@@ -5,7 +5,7 @@ from DB_handler import DBHandler
 from time import sleep
 
 
-with DBHandler(":memory:") as database:
+with DBHandler("database.db") as database:
     app = App(database)
     
     print("\nWelcome to PASSWORD MANAGER (by: github.com/hamidgh01)\n")

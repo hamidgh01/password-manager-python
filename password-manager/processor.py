@@ -11,14 +11,14 @@ from DB_handler import DBHandler
 
 def get_encryption_key():
     """
-    returns the encryption_key (saved in _confs.ini) or
+    returns the encryption_key (saved in configs.ini) or
     generates that using 'Fernet.generate_key()' and then returns.
     """
     
     config_parser = ConfigParser()
     try:
         # except the first execution, this block will be executed all the times.
-        config_parser.read_file(open("_confs.ini"))
+        config_parser.read_file(open("configs.ini"))
         if config_parser.has_option("configurations", "encryption_key"):
             encryption_key = config_parser["configurations"]["encryption_key"]
             return encryption_key.encode()
@@ -29,7 +29,7 @@ def get_encryption_key():
         encryption_key = Fernet.generate_key()
         enc_key = encryption_key.decode()
         config_parser["configurations"] = {"encryption_key": enc_key}
-        with open("_confs.ini", "w") as conf_file:
+        with open("configs.ini", "w") as conf_file:
             config_parser.write(conf_file)
         return encryption_key
 

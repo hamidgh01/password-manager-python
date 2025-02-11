@@ -3,3 +3,5 @@ venv/
 .idea/
 other versions/
 __pycache__/
+configs.ini
+database.db
