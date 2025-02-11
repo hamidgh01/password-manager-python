@@ -64,10 +64,20 @@ class App:
                 return False
             return True
         
+        def exit_if_q(input_: str) -> bool:
+            """enter 'q' to exit this process"""
+            return True if input_.lower() == "q" else False
+        
+        print("(enter 'q' to exit this process)")
         username = input("username: ")
+        if exit_if_q(username):
+            return None
         if not is_valid(username, for_="username"):
             return self.register_user()
+        
         password = getpass("password: ")
+        if exit_if_q(password):
+            return None
         if not is_valid(password, for_="password"):
             return self.register_user()
         if password == username:
@@ -77,6 +87,8 @@ class App:
             return self.register_user()
         
         confirm_password = getpass("confirm password: ")
+        if exit_if_q(confirm_password):
+            return None
         if password == confirm_password:
             password = password.encode()
             encrypted_password = self.cipher_suite.encrypt(password)

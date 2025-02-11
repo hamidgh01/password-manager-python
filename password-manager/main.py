@@ -8,7 +8,7 @@ from time import sleep
 with DBHandler(":memory:") as database:
     app = App(database)
     
-    print("PASSWORD MANAGER")
+    print("\nWelcome to PASSWORD MANAGER (by: github.com/hamidgh01)\n")
     while True:
         sleep(0.5)
         print("1. Login")
@@ -24,7 +24,10 @@ with DBHandler(":memory:") as database:
                 continue
         elif option == "2":
             sleep(0.5)
-            if result := app.register_user():
+            if (result := app.register_user()) is None:
+                sleep(0.5)
+                print("exiting process...\n")
+            elif result := app.register_user():
                 sleep(0.5)
                 print("\nyour registration was done successfully.\n"
                       "now you can login to the app!\n")
