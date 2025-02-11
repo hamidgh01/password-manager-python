@@ -27,7 +27,7 @@ class DBHandler:
         create_table_users = """
             CREATE TABLE IF NOT EXISTS users(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT(64) NOT NULL UNIQUE,
+                username TEXT(32) NOT NULL UNIQUE,
                 password TEXT(32) NOT NULL
             );
         """
@@ -45,6 +45,13 @@ class DBHandler:
         self.db_cursor.execute(create_table_users)
         self.db_cursor.execute(create_table_passwords)
         self.connector.commit()
+        
+        # note:
+        # with ... as variable:
+        #     ...
+        # point: variable = what will be returned from __enter__
+        # so:
+        return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.connector.close()
@@ -65,9 +72,16 @@ class DBHandler:
         """delete"""
         pass
     
-    def register_user(self):
+    def register_user(self, username: str, password: str) -> bool:
         """register new user"""
-        pass
+        try:
+            sql = "INSERT INTO users (username, password) VALUES (?, ?)"
+            self.db_cursor.execute(sql, (username, password))
+            self.connector.commit()
+            return True
+        except sqlite3.Error:
+            self.connector.rollback()
+            return False
     
     def change_user_password(self):
         """change user password"""

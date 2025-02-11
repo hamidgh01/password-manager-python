@@ -44,7 +44,51 @@ class App:
     
     def register_user(self):
         """register user"""
-        pass
+        print(
+            "NOTE:\n4 <= username <= 32 characters\n"
+            "8 <= password <= 32 characters\n"
+            "*** space ' ' isn't valid for both\n"
+        )
+        
+        def is_valid(data: str, for_: str):
+            """validation for username and password"""
+            if " " in data:
+                print("space ' ' isn't valid...\ntry again please!\n")
+                sleep(1)
+                return False
+            at_least = 4 if for_ == "username" else 8
+            if len(data) < at_least or len(data) > 32:
+                print(f"ERROR: {at_least} <= {for_} <= 32 characters\n"
+                      f"try again please!\n")
+                sleep(1)
+                return False
+            return True
+        
+        username = input("username: ")
+        if not is_valid(username, for_="username"):
+            return self.register_user()
+        password = getpass("password: ")
+        if not is_valid(password, for_="password"):
+            return self.register_user()
+        if password == username:
+            print("username and password can't be similar...\n"
+                  "try again please!\n")
+            sleep(1)
+            return self.register_user()
+        
+        confirm_password = getpass("confirm password: ")
+        if password == confirm_password:
+            password = password.encode()
+            encrypted_password = self.cipher_suite.encrypt(password)
+            return self.database.register_user(
+                username=username,
+                password=encrypted_password.decode()
+            )
+        else:
+            sleep(0.5)
+            print(f"\n* passwords aren't similar... please try again!\n")
+            sleep(1)
+            self.register_user()
     
     def login(self):
         """login"""

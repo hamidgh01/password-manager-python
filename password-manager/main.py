@@ -17,16 +17,22 @@ with DBHandler(":memory:") as database:
         option = input("\n>>> ")
         
         if option == "1":
+            sleep(0.5)
             if result := app.login():
                 sleep(0.5)
                 app.start_app()
                 continue
         elif option == "2":
+            sleep(0.5)
             if result := app.register_user():
                 sleep(0.5)
-                print("your registration was done successfully.\n"
+                print("\nyour registration was done successfully.\n"
                       "now you can login to the app!\n")
-                continue
+                sleep(0.5)
+            else:
+                sleep(0.5)
+                print("your registration was failed...\ntry again please!\n")
+            continue
         elif option == "3":
             sleep(0.5)
             break
@@ -34,5 +40,4 @@ with DBHandler(":memory:") as database:
             sleep(0.5)
             print("Invalid choice! Please choose a correct option (1 or 2 or 3).\n")
     
-    print("---*---*---*---*" * 4)
-    print("have a good day! :)))")
+    print("have a good day!!! :)))\n")
