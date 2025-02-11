@@ -79,6 +79,11 @@ class DBHandler:
             self.db_cursor.execute(sql, (username, password))
             self.connector.commit()
             return True
+        except sqlite3.IntegrityError:
+            self.connector.rollback()
+            print(f"the username {username!r} is already taken! "
+                  f"please enter a different username.\n")
+            return False
         except sqlite3.Error:
             self.connector.rollback()
             return False

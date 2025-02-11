@@ -24,10 +24,11 @@ with DBHandler(":memory:") as database:
                 continue
         elif option == "2":
             sleep(0.5)
-            if (result := app.register_user()) is None:
+            result = app.register_user()
+            if result is None:
                 sleep(0.5)
                 print("exiting process...\n")
-            elif result := app.register_user():
+            elif result:
                 sleep(0.5)
                 print("\nyour registration was done successfully.\n"
                       "now you can login to the app!\n")
